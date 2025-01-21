@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Form with Formspree</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Dynamic Form</h2>
+    <form id="dynamicForm" action="https://formspree.io/f/mjkknnoq" method="POST" enctype="multipart/form-data">
+      <div id="questionsContainer"></div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    // Define the questions
+    const questions = [
+      { label: "Your Name", type: "text", name: "name" },
+      { label: "Your Email", type: "email", name: "email" },
+      { label: "Your Message", type: "textarea", name: "message" },
+      { label: "Upload File", type: "file", name: "file" },
+    ];
+
+    // Render questions dynamically
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = ""; // Clear previous questions
+
+      questions.forEach((question) => {
+        const div = document.createElement("div");
+        div.className = "question";
+
+        const label = document.createElement("label");
+        label.textContent = question.label;
+        div.appendChild(label);
+
+        let input;
+        if (question.type === "textarea") {
+          input = document.createElement("textarea");
+          input.name = question.name;
+          input.rows = 4;
+        } else {
+          input = document.createElement("input");
+          input.type = question.type;
+          input.name = question.name;
+        }
+
+        div.appendChild(input);
+        container.appendChild(div);
+      });
+    }
+
+    // Initialize the form
+    renderQuestions();
+  </script>
+</body>
+</html>
